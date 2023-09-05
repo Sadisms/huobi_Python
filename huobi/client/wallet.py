@@ -40,7 +40,7 @@ class WalletClient(object):
         from huobi.service.wallet.get_deposit_withdraw import GetDepositWithdrawService
         return GetDepositWithdrawService(params).request(**self.__kwargs)
 
-    def post_create_withdraw(self, address: 'str', amount: 'float', currency: 'str', fee: 'float',
+    def post_create_withdraw(self, address: 'str', amount: 'float', currency: 'str', fee: 'float' = None,
                              chain: 'str' = None, address_tag: 'str' = None) -> int:
         """
         Submit a request to withdraw some asset from an account.
@@ -48,7 +48,7 @@ class WalletClient(object):
         :param address: The destination address of this withdraw. (mandatory)
         :param amount: The amount of currency to withdraw. (mandatory)
         :param currency: The crypto currency to withdraw. (mandatory)
-        :param fee: The fee to pay with this withdraw. (mandatory)
+        :param fee: The fee to pay with this withdraw. (optional)
         :param address_tag: A tag specified for this address. (optional)
         :param chain: set as "usdt" to withdraw USDT to OMNI, set as "trc20usdt" to withdraw USDT to TRX. (optional)
         :return: Withdraw id
@@ -56,7 +56,6 @@ class WalletClient(object):
         check_symbol(currency)
         check_should_not_none(address, "address")
         check_should_not_none(amount, "amount")
-        check_should_not_none(fee, "fee")
 
         params = {
             "currency": currency,
